@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>stipo.firstlibary</PackageId>
+    <Authors>stipo</Authors>
+    <Company>stipo</Company>
+    <Product>stipo first libary</Product>
+    <Description>This is my first libary</Description>
+  </PropertyGroup>
+
+</Project>
