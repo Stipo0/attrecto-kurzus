@@ -2,28 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FrameworkRequest;
+use App\Http\Resources\FrameworkResource;
 use App\Models\Framework;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
 class FrameworkController extends Controller
 {
-    private $frameworks =[
-        [
-            'id' => 1,
-            'name' => 'PHP',
-            'description'=> 'backend'
-        ],
-        [
-            'id' => 2,
-            'name' => 'Angular',
-            'description'=> 'frontend'
-        ],
-        [
-            'id' => 3,
-            'name' => 'React',
-            'description'=> 'frontend'
-        ],
-    ];
     /**
      * Display a listing of the resource.
      *
@@ -31,19 +17,25 @@ class FrameworkController extends Controller
      */
     public function index()
     {
-        //return Course::all();
-        return $this->frameworks;
+        return response()->json(
+            FrameworkResource::collection(Framework::all()),
+            Response::HTTP_OK
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FrameworkRequest $request)
     {
-        //
+        $data =$request->all();
+        $framework = Framework::create($data);
+        return response()->json(
+            FrameworkResource::make($framework),
+            Response::HTTP_CREATED
+        );
     }
 
     /**
@@ -54,7 +46,10 @@ class FrameworkController extends Controller
      */
     public function show($id)
     {
-        //
+        return response()->json(
+            FrameworkResource::make(Framework::find($id)),
+            Response::HTTP_OK
+        );
     }
 
     /**

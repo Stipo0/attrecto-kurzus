@@ -10,4 +10,8 @@ class Framework extends Model
     use HasFactory;
 
     protected $table = 'frameworks';
+    protected $fillable =[
+        'name',
+        'description',
+    ];
 }

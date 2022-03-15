@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', [CourseController::class, 'index']);
+//Órai
+Route::get('/courses', [CourseController::class, 'index']);
+Route::get('/courses/{id}', [CourseController::class, 'show']);
+Route::post('/courses',[CourseController::class,'store']);
 
-Route::get('/test2', [FrameworkController::class, 'index']);
+//Egyéni
+Route::get('/frameworks', [FrameworkController::class, 'index']);
+Route::get('/frameworks/{id}', [CourseController::class, 'show']);
+Route::post('/frameworks',[CourseController::class,'store']);
