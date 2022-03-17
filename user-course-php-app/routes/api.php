@@ -23,5 +23,5 @@ Route::post('/courses',[CourseController::class,'store']);
 
 //Egyéni
 Route::get('/frameworks', [FrameworkController::class, 'index']);
-Route::get('/frameworks/{id}', [CourseController::class, 'show']);
-Route::post('/frameworks',[CourseController::class,'store']);
+Route::get('/frameworks/{id}', [FrameworkController::class, 'show']);
+Route::post('/frameworks',[FrameworkController::class,'store']);
