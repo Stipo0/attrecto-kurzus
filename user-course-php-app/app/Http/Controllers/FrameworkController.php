@@ -59,9 +59,19 @@ class FrameworkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FrameworkRequest $request, Framework $framework)
     {
-        //
+        $data = $request->only([
+            'name',
+            'description',
+        ]);
+            $framework->name =$data['name'];
+            $framework->description =$data['description'];
+            $framework->save();
+
+            return response()->json(
+                FrameworkResource::make($framework),
+                Response::HTTP_OK);
     }
 
     /**
@@ -70,8 +80,9 @@ class FrameworkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Framework $framework)
     {
-        //
+        $framework->delete();
+        return response()->json(null,Response::HTTP_NO_CONTENT);
     }
 }

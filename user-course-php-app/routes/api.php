@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FrameworkController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,12 +17,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Órai
+//Órai//
+
+/*Course*/
 Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/courses/{id}', [CourseController::class, 'show']);
 Route::post('/courses',[CourseController::class,'store']);
+Route::delete('/courses/{course}',[CourseController::class,'destroy']);
+Route::put('/courses/{course}',[CourseController::class,'update']);
 
-//Egyéni
+/*User*/
+Route::post('/users/registration', [UserController::class,'store']);
+
+
+//Szorgalmi//
+
+/*Framework*/
 Route::get('/frameworks', [FrameworkController::class, 'index']);
-Route::get('/frameworks/{id}', [CourseController::class, 'show']);
-Route::post('/frameworks',[CourseController::class,'store']);
+Route::get('/frameworks/{id}', [FrameworkController::class, 'show']);
+Route::post('/frameworks',[FrameworkController::class,'store']);
+Route::delete('/frameworks/{framework}',[FrameworkController::class,'destroy']);
+Route::put('/frameworks/{framework}',[FrameworkController::class,'update']);
