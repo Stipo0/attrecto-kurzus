@@ -2,6 +2,7 @@
 using Academy_2022.Models.Dto;
 using Academy_2022.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -99,5 +100,20 @@ namespace Academy_2022.Controllers
              
             
         }
+
+        /*Szorgalmi*/
+
+        //Jelenleg nem létezik Age//
+
+        /*[HttpGet("szorgalmi")]
+        public IEnumerable Szorgalmi()
+        {
+
+            var namesQuery = _userRepository.GetAll().Where(_userRepository => _userRepository.Age>18);
+
+            return namesQuery;
+
+        }
+        */
     }
 }
