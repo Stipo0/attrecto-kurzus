@@ -33,7 +33,8 @@ namespace Academy_2022.Repositories
             {
                 Title = courseDto.Title,
                 Description = courseDto.Description,
-                Url = courseDto.Url
+                Url = courseDto.Url,
+                AuthorId=courseDto.AuthorId
             };
 
             var addCourse = await _applicationDbContext.AddAsync(course);
@@ -53,6 +54,7 @@ namespace Academy_2022.Repositories
             course.Title = courseDto.Title;
             course.Description = courseDto.Description;
             course.Url = courseDto.Url;
+            course.AuthorId = courseDto.AuthorId;
 
             _applicationDbContext.SaveChanges();
 

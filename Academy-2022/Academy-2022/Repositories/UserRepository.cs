@@ -29,7 +29,9 @@ namespace Academy_2022.Repositories
         {
             var user = new Models.User
             {
-                Email = userDto.Email
+                Email = userDto.Email,
+                Name = userDto.Name,
+                Password = userDto.Password,
             };
 
             var addUser = await _applicationDbContext.AddAsync(user);
@@ -47,6 +49,8 @@ namespace Academy_2022.Repositories
             }
 
             user.Email = userDto.Email;
+            user.Name = userDto.Name;
+            user.Password = userDto.Password;
 
             _applicationDbContext.SaveChanges();
 

@@ -15,5 +15,8 @@ namespace Academy_2022.Models.Dto
 
         [Required]
         public string Url { get; set; }
+
+        [Required]
+        public int AuthorId { get; set; }
     }
 }
