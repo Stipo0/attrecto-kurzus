@@ -16,5 +16,9 @@ namespace Academy_2022.Models.Dto
         [Required]
         public string Password { get; set; }
 
+        [Required]
+        public string Role { get; set; }
+
+
     }
 }
