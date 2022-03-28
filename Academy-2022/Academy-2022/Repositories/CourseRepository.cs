@@ -1,6 +1,9 @@
 ﻿using Academy_2022.Data;
 using Academy_2022.Models;
 using Academy_2022.Models.Dto;
+using Microsoft.EntityFrameworkCore;
+
+
 
 namespace Academy_2022.Repositories
 {
@@ -8,23 +11,23 @@ namespace Academy_2022.Repositories
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public CourseRepository()
+        public CourseRepository(ApplicationDbContext applicationDbContext)
         {
-            _applicationDbContext = new ApplicationDbContext();
+            _applicationDbContext = applicationDbContext;
         }
 
-        public IEnumerable<Course> GetAll()
+        public Task<List<Course>> GetAllAsync()
         {
 
-            return _applicationDbContext.Courses.ToList();
+            return _applicationDbContext.Courses.ToListAsync();
         }
 
-        public Course? GetbyId(int id)
+        public Task<Course?> GetbyIdAsync(int id)
         {
-            return _applicationDbContext.Courses.FirstOrDefault(course => course.Id == id);
+            return _applicationDbContext.Courses.FirstOrDefaultAsync(course => course.Id == id);
         }
 
-        public Course Create(CourseDto courseDto)
+        public async Task<Course> CreateAsync(CourseDto courseDto)
         {
             var course = new Models.Course
             {
@@ -33,8 +36,8 @@ namespace Academy_2022.Repositories
                 Url = courseDto.Url
             };
 
-            _applicationDbContext.Add(course);
-            _applicationDbContext.SaveChanges();
+            var addCourse = await _applicationDbContext.AddAsync(course);
+            var saveCourse = await _applicationDbContext.SaveChangesAsync();
 
             return course;
         }

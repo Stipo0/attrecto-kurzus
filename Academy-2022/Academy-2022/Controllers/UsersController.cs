@@ -14,23 +14,23 @@ namespace Academy_2022.Controllers
     {
         private readonly IUserRepository _userRepository;
 
-        public UsersController()
+        public UsersController(IUserRepository userRepository)
         {
-            _userRepository = new UserRepository();
+            _userRepository = userRepository;
         }
 
         // GET: api/<UsersController>
         [HttpGet]
-        public IEnumerable<User> Get()
+        public async Task<IEnumerable<User>> GetAsync()
         {
-            return _userRepository.GetAll();
+            return await _userRepository.GetAllAsync();
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public async Task<ActionResult<User>> GetAsync(int id)
         {
-            var user = _userRepository.GetbyId(id);
+            var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -41,7 +41,7 @@ namespace Academy_2022.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public ActionResult<User> Post([FromBody] UserDto userDto)
+        public async Task<ActionResult<User>> Post([FromBody] UserDto userDto)
         {
             // INPUT VALIDATION
             if (!ModelState.IsValid)
@@ -49,7 +49,7 @@ namespace Academy_2022.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = _userRepository.Create(userDto);
+            var user = await _userRepository.CreateAsync(userDto);
 
             return Created("", user);
         }
@@ -109,9 +109,9 @@ namespace Academy_2022.Controllers
         public IEnumerable Szorgalmi()
         {
 
-            var namesQuery = _userRepository.GetAll().Where(_userRepository => _userRepository.Age>18);
+            var users = _userRepository.GetAll().Where(user => user.Age > 18);
 
-            return namesQuery;
+            return users;
 
         }
         */

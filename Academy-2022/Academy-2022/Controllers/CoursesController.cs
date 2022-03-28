@@ -13,23 +13,23 @@ namespace Academy_2022.Controllers
     {
         private readonly ICourseRepository _courseRepository;
 
-        public CoursesController()
+        public CoursesController(ICourseRepository courseRepository)
         {
-            _courseRepository = new CourseRepository();
+            _courseRepository = courseRepository;
         }
 
         // GET: api/<CourseController>
         [HttpGet]
-        public IEnumerable<Course> Get()
+        public async Task<IEnumerable<Course>> GetAsync()
         {
-            return _courseRepository.GetAll();
+            return await _courseRepository.GetAllAsync();
         }
 
         // GET api/<CourseController>/5
         [HttpGet("{id}")]
-        public ActionResult<Course> Get(int id)
+        public async Task<ActionResult<Course>> GetAsync(int id)
         {
-            var course = _courseRepository.GetbyId(id);
+            var course = await _courseRepository.GetbyIdAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace Academy_2022.Controllers
 
         // POST api/<CourseController>
         [HttpPost]
-        public ActionResult<Course> Post([FromBody] CourseDto courseDto)
+        public async Task<ActionResult<Course>> Post([FromBody] CourseDto courseDto)
         {
             if (!ModelState.IsValid)
             { 
@@ -48,7 +48,7 @@ namespace Academy_2022.Controllers
             }
 
 
-            var course = _courseRepository.Create(courseDto);
+            var course = await _courseRepository.CreateAsync(courseDto);
 
             return Created("", course);
         }

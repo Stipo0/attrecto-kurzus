@@ -6,5 +6,10 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
+
+
+        // N - 1 relation
+        public int? AuthorId { get; set; }
+        public User Author { get; set; }
     }
 }
