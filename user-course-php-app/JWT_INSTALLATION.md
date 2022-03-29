@@ -1,16 +1,16 @@
-### Lépések ###
+# Lépések #
 
 # Terminál utasítások#
-# Végrehajtás a felsorolás sorrendjében #
+### Végrehajtás a felsorolás sorrendjében ###
  - composer remove tymon/jwt-auth
  - composer require php-open-source-saver/jwt-auth
  - php artisan vendor:publish --provider=  ”PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider”
  - php artisan jwt:secret
 
-# Fájl módosítások#
+# Fájl módosítások #
 
 [config\jwt.php]
-# Kiegészítés az alábbi elemmel #
+### Kiegészítések az alábbi elemekkel ###
 'guards' => [
         'api'=>[
             'driver'=> 'jwt',
