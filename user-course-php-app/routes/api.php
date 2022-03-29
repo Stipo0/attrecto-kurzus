@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FrameworkController;
 use App\Http\Controllers\UserController;
@@ -28,6 +29,9 @@ Route::put('/courses/{course}',[CourseController::class,'update']);
 
 /*User*/
 Route::post('/users/registration', [UserController::class,'store']);
+
+/*Auth*/
+Route::post('/auth/login',[AuthController::class,'login']);
 
 
 //Szorgalmi//

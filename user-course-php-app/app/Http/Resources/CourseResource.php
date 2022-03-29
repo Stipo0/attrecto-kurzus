@@ -18,7 +18,8 @@ class CourseResource extends JsonResource
             'id' => $this->id,
             'title'=>$this->title,
             'description'=>$this->description,
-            'extendedTitle'=> $this->title_with_author
+            'extendedTitle' => $this->TitleWithAuthor,
+            'author' => UserResource::make($this->author)
         ];
     }
 }

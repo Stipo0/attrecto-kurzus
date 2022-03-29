@@ -72,7 +72,8 @@ class CourseController extends Controller
 
         return response()->json(
             CourseResource::make($course),
-            Response::HTTP_OK);
+            Response::HTTP_OK
+        );
     }
 
     /**
@@ -84,6 +85,9 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         $course->delete();
-        return response()->json(null,Response::HTTP_NO_CONTENT);
+        return response()->json(
+            null,
+            Response::HTTP_NO_CONTENT
+        );
     }
 }

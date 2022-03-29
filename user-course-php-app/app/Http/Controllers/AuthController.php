@@ -1,29 +1,48 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Requests\UserRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
+    public function login(LoginRequest $request)
+    {
+         $user =User::where('email', '=',$request->email)->firstOrFail();
+
+        if(!$isValid = Hash::check($request->password,$user->password))
+        {
+            return response()->json('Nem léphet be!');
+        }
+
+         $token =$user->createToken('accessToken');
+
+         return response()->json(
+             ['isValid'=> $token->plainTextToken]
+            );
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-        $data=$request->only(['name','email','password']);
-        $data['password'] = Hash::make($data['password']);
-        $user = User::create($data);
-        return response()->json(
-            UserResource::make($user)
-        );
+        //
     }
 
     /**
