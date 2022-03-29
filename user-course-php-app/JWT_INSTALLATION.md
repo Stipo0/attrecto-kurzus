@@ -10,7 +10,7 @@
 # Fájl módosítások #
 
 [config\jwt.php]
-### Kiegészítések az alábbi elemekkel ###
+
 'guards' => [
         'api'=>[
             'driver'=> 'jwt',
