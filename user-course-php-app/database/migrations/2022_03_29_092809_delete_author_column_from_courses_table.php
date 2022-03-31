@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\Course;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use PharIo\Manifest\Author;
 
 return new class extends Migration
 {
@@ -14,6 +17,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
+            $courses = Course::all();
+            foreach($courses as $course){
+            $userId = User::where('email', '=', $course->author) ->first();
+            if(!empty($user)){
+                $course->author_id = $user->id;
+                $course->save();
+            }
+        }
             $table->dropColumn('author');
         });
     }
@@ -26,7 +37,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('courses', function (Blueprint $table) {
-            //
+            $table->string('author');
         });
     }
 };

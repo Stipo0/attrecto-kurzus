@@ -7,15 +7,5 @@
  - php artisan vendor:publish --provider=  ”PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider”
  - php artisan jwt:secret
 
-# Fájl módosítások #
-
-[config\jwt.php]
-
-'guards' => [
-        'api'=>[
-            'driver'=> 'jwt',
-            'provider' => 'users',
-        ],
-    ],
 
 

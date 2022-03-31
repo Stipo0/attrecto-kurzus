@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CourseController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +20,8 @@ class CourseController extends Controller
     {
         return response()->json(
             CourseResource::collection(Course::all()),
-            Response::HTTP_OK);
+            Response::HTTP_OK
+        );
     }
 
     /**
@@ -30,10 +32,8 @@ class CourseController extends Controller
     public function store(CourseRequest $request)
     {
         $data = $request->all();
-        $course =Course::create($data);
-        return response()->json(
-            CourseResource::make($course),
-            Response::HTTP_CREATED);
+        $course = Course::create($data);
+        return response()->json(CourseResource::make($course), Response::HTTP_CREATED);
     }
 
     /**
@@ -46,7 +46,8 @@ class CourseController extends Controller
     {
         return response()->json(
             CourseResource::make(Course::find($id)),
-            Response::HTTP_OK);
+            Response::HTTP_OK
+        );
     }
 
     /**
@@ -59,15 +60,16 @@ class CourseController extends Controller
     public function update(CourseRequest $request, Course $course)
     {
         $data = $request->only([
-        'title',
-        'description',
-        'author',
-        'url'
-    ]);
-        $course->title =$data['title'];
-        $course->description =$data['description'];
-        $course->author =$data['author'];
-        $course->url =$data['url'] ?? null;
+            'title',
+            'description',
+            'author',
+            'url'
+        ]);
+
+        $course->title = $data['title'];
+        $course->description = $data['description'];
+        $course->author = $data['author'];
+        $course->url = $data['url'] ?? null;
         $course->save();
 
         return response()->json(
@@ -84,7 +86,11 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        //$course = Course::findOrFail($id);
+
         $course->delete();
+
+        //Course::destroy($id);
         return response()->json(
             null,
             Response::HTTP_NO_CONTENT

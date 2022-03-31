@@ -29,10 +29,22 @@ Route::put('/courses/{course}',[CourseController::class,'update']);
 
 /*User*/
 Route::post('/users/registration', [UserController::class,'store']);
+Route::put('/users/{user}', [UserController::class, 'update']);
 
 /*Auth*/
-Route::post('/auth/login',[AuthController::class,'login']);
+Route::group([
+    'prefix' => 'auth'
+], function ($router) {
 
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('me', [AuthController::class, 'me']);
+    });
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+
+
+});
 
 //Szorgalmi//
 

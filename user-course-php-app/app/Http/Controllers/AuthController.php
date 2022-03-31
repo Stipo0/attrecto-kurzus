@@ -1,81 +1,47 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\LoginRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request)
+    public function login()
     {
-         $user =User::where('email', '=',$request->email)->firstOrFail();
+        $credentials = request(['email', 'password']);
 
-        if(!$isValid = Hash::check($request->password,$user->password))
-        {
-            return response()->json('Nem léphet be!');
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
-         $token =$user->createToken('accessToken');
-
-         return response()->json(
-             ['isValid'=> $token->plainTextToken]
-            );
+        return $this->respondWithToken($token);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function me()
     {
-        //
+        return response()->json(UserResource::make(auth()->user()));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function logout()
     {
-        //
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function refresh()
     {
-        //
+        return $this->respondWithToken(auth()->refresh());
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    protected function respondWithToken($token)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            'accessToken' => $token,
+            'tokenType' => 'bearer',
+            'expiresIn' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

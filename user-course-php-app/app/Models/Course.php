@@ -25,4 +25,14 @@ class Course extends Model
 
         return $this->hasOne(User::class, 'id','author_id');
     }
+
+    public function students(){
+
+        return $this->belongsToMany(
+            User::class,
+            'course_users',
+            'course_id',
+            'user_id'
+        );
+    }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -18,11 +21,12 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $data=$request->only(['name','email','password']);
+        $data = $request->only(['name', 'email', 'password']);
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
         return response()->json(
-            UserResource::make($user)
+            UserResource::make($user),
+            Response::HTTP_CREATED
         );
     }
 
@@ -44,9 +48,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $courses = $request->courses;
+        $user->assingedCourses()->sync($courses);
     }
 
     /**

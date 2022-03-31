@@ -19,7 +19,7 @@ class CourseResource extends JsonResource
             'title'=>$this->title,
             'description'=>$this->description,
             'extendedTitle' => $this->TitleWithAuthor,
-            'author' => UserResource::make($this->author)
+            'author' => AuthorResource::make($this->author)
         ];
     }
 }
