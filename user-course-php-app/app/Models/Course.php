@@ -21,7 +21,7 @@ class Course extends Model
         return $this->title . "-" . $this->author->name;
     }
 
-    public function author(){
+   public function author(){
 
         return $this->hasOne(User::class, 'id','author_id');
     }
@@ -30,9 +30,10 @@ class Course extends Model
 
         return $this->belongsToMany(
             User::class,
-            'course_users',
+            'course_user',
             'course_id',
             'user_id'
         );
     }
+
 }

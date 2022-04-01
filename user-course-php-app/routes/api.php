@@ -21,15 +21,26 @@ use Illuminate\Support\Facades\Route;
 //Órai//
 
 /*Course*/
-Route::get('/courses', [CourseController::class, 'index']);
-Route::get('/courses/{id}', [CourseController::class, 'show']);
-Route::post('/courses',[CourseController::class,'store']);
-Route::delete('/courses/{course}',[CourseController::class,'destroy']);
-Route::put('/courses/{course}',[CourseController::class,'update']);
+/*Auth*/
+Route::group([
+    'prefix' => 'courses'
+], function ($router) {
+
+    Route::get('', [CourseController::class, 'index']);
+    Route::get('{id}', [CourseController::class, 'show']);
+    Route::post('',[CourseController::class,'store']);
+    Route::delete('{course}',[CourseController::class,'destroy']);
+    Route::put('{course}',[CourseController::class,'update']);
+
+    Route::put('{course}', [CourseController::class, 'update2']);
+});
+
+
 
 /*User*/
 Route::post('/users/registration', [UserController::class,'store']);
 Route::put('/users/{user}', [UserController::class, 'update']);
+
 
 /*Auth*/
 Route::group([
@@ -38,12 +49,10 @@ Route::group([
 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get('me', [AuthController::class, 'me']);
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
     });
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-
-
 });
 
 //Szorgalmi//

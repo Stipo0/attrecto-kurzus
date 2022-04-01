@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -76,6 +77,13 @@ class CourseController extends Controller
             CourseResource::make($course),
             Response::HTTP_OK
         );
+    }
+
+    public function update2(UpdateCourseRequest $request, Course $course)
+    {
+        $users = $request->users;
+        $course->students()->sync($users);
+
     }
 
     /**
