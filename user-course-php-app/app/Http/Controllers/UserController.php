@@ -24,6 +24,7 @@ class UserController extends Controller
         $data = $request->only(['name', 'email', 'password']);
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
+
         return response()->json(
             UserResource::make($user),
             Response::HTTP_CREATED

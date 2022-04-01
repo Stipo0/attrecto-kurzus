@@ -45,7 +45,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function courses(){
 
-        return $this->hasMany(Couse::class, 'author_id', 'id');
+        return $this->hasMany(Course::class, 'author_id', 'id');
     }
 
     public function assingedCourses(){
